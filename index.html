@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>Add custom markers in Mapbox GL JS</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .marker {
+        background-image: url('mapbox-icon.png');
+        background-size: cover;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        cursor: pointer;
+        }
+
+        .mapboxgl-popup {
+        max-width: 200px;
+        }
+
+        .mapboxgl-popup-content {
+        text-align: center;
+        font-family: 'Open Sans', sans-serif;
+        }
+    </style>
+</head>
+
+<script src="script.js" defer></script>
+
+<body>
+
+<div id='map'></div>
+
+<script>
+
+mapboxgl.accessToken = 'pk.eyJ1Ijoia2FyYW5zaGFybWEwNyIsImEiOiJja3ZiZWZhaGYyODYzMnFva2g0MXlkNDJnIn0.FwUNVGAgEvk_fhxVtzP9uw';
+
+const map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox://styles/mapbox/light-v10',
+  center: [55.27416,25.19714],
+  zoom: 14
+});
+
+// Adding the markers on the map, for the locations and events as found
+// from the PredictHQ Events Search API.
+
+const geojson = {
+  type: 'FeatureCollection',
+  features: [
+    //Event-1
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [55.2888000,25.2271000]
+      },
+      properties: {
+        title: "International Apparel & Textile Fair",
+        description: 'Date: 28-11-2021 to 30-11-2021 Location: Dubai World Trade Centre, Sheikh Zayed Road, Dubai, United Arab Emirates',
+      }
+    },
+    //Event-2
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [55.277776,25.202791]
+      },
+      properties: {
+        title: 'GCC Government and Business Organizations Golden Jubilee Conference',
+        description: 'Date: 28-11-2021 Location: Swissotel Al Murooj Dubai, Sheikh Zayed Road, Dubai, United Arab Emirates'
+      }
+    },
+    //Event-3
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [55.1628301,25.101547]
+      },
+      properties: {
+        title: 'UOWD - Open Day',
+        description: 'Date: 27-11-2021 Location: University of Wollongong in Dubai, Location: Block 5, 14 & 15 Dubai Knowledge Park, Dubayy, Dubai, United Arab Emirates'
+      }
+    },
+    //Event-4
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [55.4651618,24.9947022]
+      },
+      properties: {
+        title: 'Division 1 - Gulf Heroes vs Al Taawon',
+        description: 'Date: 27-11-2021 Location: The Sevens Stadium, Dubai, United Arab Emirates'
+      }
+    },
+    //Event-5
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [56.171228885650635,25.315176314099507]
+      },
+      properties: {
+        title: 'Division 1 - Masafi vs Al Hamriyah',
+        description: 'Date: 27-11-2021 Location: Masafi Stadium, Masafi, Ras al Khaimah, United Arab Emirates'
+      }
+    },
+    //Event-6
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [56.26595377922058,25.609294083605757]
+      },
+      properties: {
+        title: 'Division 1 - Dibba Al Hisn vs Hatta',
+        description: 'Date: 27-11-2021 Location: Dibba Al-Hisn Stadium, Dibba Al-Hisn, United Arab Emirates'
+      }
+    },
+    //Event-7
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [55.80047249794006,25.70515764049144]
+      },
+      properties: {
+        title: 'Division 1 - Al Jazira Al Hamra vs Al Ramms',
+        description: 'Date: 25-11-2021 Location: Al Jazirah Al Hamra Stadium, Al Jazirah Al Hamra, United Arab Emirates'
+      }
+    },
+    //Event-8
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [55.1600651,24.966401]
+      },
+      properties: {
+        title: 'Trade Mission to Dubai Expo (Focus: Luxury goods and services)',
+        description: 'Date: 27-11-2021 to 04-12-2021 Location: Expo 2020 Site Office, Dubai, Dubai, United Arab Emirates'
+      }
+    },
+    //Event-9
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [55.2226377,25.0351416]
+      },
+      properties: {
+        title: 'Festival of Schools - Victory Heights Primary School',
+        description: 'Date: 27-11-2021 Location: Victory Heights Primary School, Dubai, Dubai, United Arab Emirates'
+      }
+    },
+    //Event-10
+    {
+      type: 'Feature',
+      geometry: {
+        type: 'Point',
+        coordinates: [55.2888063,25.2271847]
+      },
+      properties: {
+        title: 'Arising Sub Sahara Africa Investment Conference & Awards',
+        description: 'Date: 27-11-2021 Location: Dubai World Trade Centre, Sheikh Zayed Road, Dubai, United Arab Emirates'
+      }
+    }
+  ]
+};
+
+// add markers to map
+for (const feature of geojson.features) {
+  // create a HTML element for each feature
+  const el = document.createElement('div');
+  el.className = 'marker';
+
+  // make a marker for each feature and add to the map
+  new mapboxgl.Marker(el)
+  .setLngLat(feature.geometry.coordinates)
+  .setPopup(
+    new mapboxgl.Popup({ offset: 25 }) // add popups
+      .setHTML(
+        `<h3>${feature.properties.title}</h3><p>${feature.properties.description}</p>`
+      )
+  )
+  .addTo(map);
+}
+
+</script>
+
+</body>
+</html>
